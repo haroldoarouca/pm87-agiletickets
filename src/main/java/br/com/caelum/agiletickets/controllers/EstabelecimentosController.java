@@ -20,7 +20,8 @@ public class EstabelecimentosController {
 	private final Validator validator;
 	private final DiretorioDeEstabelecimentos diretorio;
 
-	public EstabelecimentosController(Result result, Validator validator, DiretorioDeEstabelecimentos diretorio) {
+	public EstabelecimentosController(Result result, Validator validator,
+			DiretorioDeEstabelecimentos diretorio) {
 		this.result = result;
 		this.validator = validator;
 		this.diretorio = diretorio;
@@ -34,17 +35,17 @@ public class EstabelecimentosController {
 	@Post("/estabelecimentos")
 	public void adiciona(final Estabelecimento estabelecimento) {
 		// validando!
-		validator.checking(new Validations() {{
-			that(!Strings.isNullOrEmpty(estabelecimento.getNome()), "estabelecimento.nome","nome.nulo");
-			that(!Strings.isNullOrEmpty(estabelecimento.getEndereco()), "estabelecimento.endereco","endereco.nulo");
-		}});
+		validator.checking(new Validations() {
+			{
+				that(!Strings.isNullOrEmpty(estabelecimento.getNome()),
+						"estabelecimento.nome", "nome.nulo");
+				that(!Strings.isNullOrEmpty(estabelecimento.getEndereco()),
+						"estabelecimento.endereco", "endereco.nulo");
+			}
+		});
 		validator.onErrorRedirectTo(this).lista();
 
 		diretorio.adiciona(estabelecimento);
 		result.redirectTo(this).lista();
-	}
-
-	private boolean ehbranco(String a) {
-		return Strings.isNullOrEmpty(a);
 	}
 }
