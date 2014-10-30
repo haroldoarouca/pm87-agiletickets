@@ -36,7 +36,6 @@ public class EspetaculosController {
 	private final Validator validator;
 	private final Agenda agenda;
 	private final DiretorioDeEstabelecimentos estabelecimentos;
-	private Estabelecimento estabelecimento;
 
 	public EspetaculosController(Result result, Validator validator, Agenda agenda, DiretorioDeEstabelecimentos estabelecimentos) {
 		this.result = result;
@@ -83,7 +82,6 @@ public class EspetaculosController {
 		// aqui faz a magica!
 		// cria sessoes baseado no periodo de inicio e fim passados pelo usuario
 		List<Sessao> sessoes = espetaculo.criaSessoes(inicio, fim, horario, periodicidade);
-
 		agenda.agende(sessoes);
 
 		result.include("message", sessoes.size() + " sessões criadas com sucesso");
@@ -136,10 +134,4 @@ public class EspetaculosController {
 		validator.onErrorUse(status()).notFound();
 		return espetaculo;
 	}
-
-	// metodo antigo. aqui soh por backup
-	private Estabelecimento criaEstabelecimento(Long id) {
-		return estabelecimentos.todos().get(0);
-	}
-	
 }
